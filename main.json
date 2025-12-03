@@ -1,0 +1,81 @@
+
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "iotHubName": { "type": "string" },
+    "location":   { "type": "string" },
+    "uamiResourceId": { "type": "string" },
+
+    "eventstreamIngestUrl": { "type": "string" },
+    "eventstreamAuthHeaderName": { "type": "string", "defaultValue": "Authorization" },
+    "eventstreamAuthHeaderValue": { "type": "securestring" },
+
+    "routeName": { "type": "string", "defaultValue": "routeToEventstream" },
+    "endpointName": { "type": "string", "defaultValue": "eventstreamCustomEndpoint" },
+    "routeCondition": { "type": "string", "defaultValue": "true" } 
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Devices/IotHubs",
+      "apiVersion": "2023-06-30",
+      "name": "[parameters('iotHubName')]",
+      "location": "[parameters('location')]",
+      "sku": { "name": "S1", "capacity": 1 },
+      "properties": {
+        "routing": {
+          "endpointTypes": [ "custom" ],
+          "routingEndpoints": {
+            "customEndpoints": [
+              {
+                "name": "[parameters('endpointName')]",
+                "properties": {
+                  "endpointUri": "[parameters('eventstreamIngestUrl')]",
+                  "authenticationType": "header",            // using header-based token
+                  "authorizationHeader": {
+                    "name": "[parameters('eventstreamAuthHeaderName')]",
+                    "value": "[parameters('eventstreamAuthHeaderValue')]"
+                  },
+                  "identity": {
+                    "type": "userAssigned",
+                    "userAssignedIdentity": "[parameters('uamiResourceId')]"
+                  },
+                  "batchFrequencyInSeconds": 30,             // tune batching
+                  "maxBatchSizeInBytes": 262144,             // 256 KB; tune as needed
+                  "fileNameFormat": "iot-{yyyy}-{MM}-{dd}-{HH}-{mm}-{ss}-{rand}" // optional if endpoint expects it
+                }
+              }
+            ]
+          },
+          "routes": [
+            {
+              "name": "[parameters('routeName')]",
+              "properties": {
+                "source": "DeviceMessages",
+                "condition": "[parameters('routeCondition')]",
+                "endpointNames": [ "[parameters('endpointName')]" ],
+                "isEnabled": true
+              }
+            }
+          ],
+          "fallbackRoute": {
+            "name": "fallback",
+            "properties": {
+              "source": "DeviceMessages",
+              "condition": "false",
+              "endpointNames": [],
+              "isEnabled": false
+            }
+          }
+        },
+        "features": { "enableRouting": true }
+      },
+      "identity": {
+        "type": "UserAssigned",
+        "userAssignedIdentities": {
+          "[parameters('uamiResourceId')]": {}
+        }
+      }
+    }
+  ]
+}

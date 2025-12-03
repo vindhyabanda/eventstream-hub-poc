@@ -1,0 +1,19 @@
+
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "iotHubName": { "value": "vh-iot-poc-hub" },
+    "location":   { "value": "westus2" },
+
+    "uamiResourceId": { "value": "/subscriptions/<SUB>/resourceGroups/<RG>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/<UAMI_NAME>" },
+
+    "eventstreamIngestUrl": { "value": "https://<EVENTSTREAM_INGEST_HOST>/ingest/iot" },
+    "eventstreamAuthHeaderName": { "value": "Authorization" },
+    "eventstreamAuthHeaderValue": { "value": "Bearer <EVENTSTREAM_TOKEN_OR_KEY>" },
+
+    "routeName": { "value": "routeToEventstream" },
+    "endpointName": { "value": "eventstreamCustomEndpoint" },
+    "routeCondition": { "value": "true" }
+  }
+}
