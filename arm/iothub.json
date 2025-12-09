@@ -1,0 +1,45 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "iotHubName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the IoT Hub."
+      }
+    },
+    "location": {
+      "type": "string",
+      "metadata": {
+        "description": "Location for the IoT Hub."
+      }
+    },
+    "uamiResourceId": {
+      "type": "string",
+      "metadata": {
+        "description": "Resource ID of the User-Assigned Managed Identity."
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Devices/IotHubs",
+      "apiVersion": "2021-04-12",
+      "name": "[parameters('iotHubName')]",
+      "location": "[parameters('location')]",
+      "identity": {
+        "type": "UserAssigned",
+        "userAssignedIdentities": {
+          "[parameters('uamiResourceId')]": {}
+        }
+      },
+      "properties": {
+        "eventHubEndpoints": {},
+        "routing": {
+          "endpoints": {},
+          "routes": []
+        }
+      }
+    }
+  ]
+}

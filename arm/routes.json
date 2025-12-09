@@ -1,0 +1,37 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "routeName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the route."
+      }
+    },
+    "endpointName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the custom endpoint."
+      }
+    },
+    "routeCondition": {
+      "type": "string",
+      "metadata": {
+        "description": "Condition for the route."
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Devices/IotHubs/Routes",
+      "apiVersion": "2021-04-12",
+      "name": "[parameters('routeName')]",
+      "properties": {
+        "source": "DeviceMessages",
+        "endpointNames": ["[parameters('endpointName')]"],
+        "isEnabled": true,
+        "condition": "[parameters('routeCondition')]"
+      }
+    }
+  ]
+}

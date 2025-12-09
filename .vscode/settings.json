@@ -1,0 +1,7 @@
+{
+  "[json]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "azureResourceManagerTools.templateValidation": true
+}

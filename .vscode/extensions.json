@@ -1,0 +1,7 @@
+{
+  "recommendations": [
+    "ms-azuretools.vscode-arm-template",
+    "ms-vscode.azure-account",
+    "ms-vscode.powershell"
+  ]
+}

@@ -1,16 +1,21 @@
-
 {
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "iotHubName": { "value": "vh-iot-poc-hub" },
-    "location":   { "value": "westus2" },
+    "iotHubName": { "value": "vbanda-messageschema-standard" },
+    "location":   { "value": "eastus" },
 
-    "uamiResourceId": { "value": "/subscriptions/<SUB>/resourceGroups/<RG>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/<UAMI_NAME>" },
+    "uamiResourceId": { "value": "/subscriptions/c81b9a28-8a30-4081-b1b9-c5233f796823/resourceGroups/vbanda-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/espocUAMI" },
 
-    "eventstreamIngestUrl": { "value": "https://<EVENTSTREAM_INGEST_HOST>/ingest/iot" },
-    "eventstreamAuthHeaderName": { "value": "Authorization" },
-    "eventstreamAuthHeaderValue": { "value": "Bearer <EVENTSTREAM_TOKEN_OR_KEY>" },
+    "eventHubNamespaceResourceId": {
+        "value": "/subscriptions/1e0cf059-0d5f-48db-8e1e-667b8d2dcdb5/resourceGroups/ESEVENTHUBwestc00001/providers/Microsoft.EventHub/namespaces/esehmtcylvucukol9krx3uy1"
+    },
+    "eventHubEndpoint": {
+      "value": "sb://esehmtcylvucukol9krx3uy1.servicebus.windows.net"
+    },
+    "iotHubResourceId": {
+      "value": "/subscriptions/c81b9a28-8a30-4081-b1b9-c5233f796823/resourceGroups/vbanda-rg/providers/Microsoft.Devices/IotHubs/vbanda-messageschema-standard"
+    },
 
     "routeName": { "value": "routeToEventstream" },
     "endpointName": { "value": "eventstreamCustomEndpoint" },

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "uamiName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the User-Assigned Managed Identity."
+      }
+    },
+    "location": {
+      "type": "string",
+      "metadata": {
+        "description": "Location for the UAMI."
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+      "apiVersion": "2021-09-30-preview",
+      "name": "[parameters('uamiName')]",
+      "location": "[parameters('location')]",
+      "properties": {}
+    }
+  ]
+}

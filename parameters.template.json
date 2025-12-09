@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "iotHubName": { "value": "<IOT_HUB_NAME>" },
+    "location":   { "value": "<LOCATION>" },
+
+    "uamiResourceId": { "value": "/subscriptions/<SUBSCRIPTION_ID>/resourceGroups/<RESOURCE_GROUP>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/<UAMI_NAME>" },
+
+    "eventHubNamespaceResourceId": {
+        "value": "/subscriptions/<SUBSCRIPTION_ID>/resourceGroups/<RESOURCE_GROUP>/providers/Microsoft.EventHub/namespaces/<EVENT_HUB_NAMESPACE>"
+    },
+    "eventHubEndpoint": {
+      "value": "sb://<EVENT_HUB_NAMESPACE>.servicebus.windows.net"
+    },
+    "iotHubResourceId": {
+      "value": "/subscriptions/<SUBSCRIPTION_ID>/resourceGroups/<RESOURCE_GROUP>/providers/Microsoft.Devices/IotHubs/<IOT_HUB_NAME>"
+    },
+
+    "routeName": { "value": "<ROUTE_NAME>" },
+    "endpointName": { "value": "<ENDPOINT_NAME>" },
+    "routeCondition": { "value": "<ROUTE_CONDITION>" }
+  }
+}

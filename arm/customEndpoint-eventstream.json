@@ -1,0 +1,37 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "endpointName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the custom endpoint."
+      }
+    },
+    "eventHubNamespaceResourceId": {
+      "type": "string",
+      "metadata": {
+        "description": "Resource ID of the Event Hub Namespace."
+      }
+    },
+    "eventHubEndpoint": {
+      "type": "string",
+      "metadata": {
+        "description": "Endpoint of the Event Hub Namespace."
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Devices/IotHubs/Endpoints",
+      "apiVersion": "2021-04-12",
+      "name": "[parameters('endpointName')]",
+      "properties": {
+        "endpointType": "AzureEventHubs",
+        "authenticationType": "IdentityBased",
+        "resourceId": "[parameters('eventHubNamespaceResourceId')]",
+        "connectionString": "[concat('Endpoint=', parameters('eventHubEndpoint'))]"
+      }
+    }
+  ]
+}
